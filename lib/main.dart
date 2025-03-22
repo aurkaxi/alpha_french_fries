@@ -40,9 +40,10 @@ class _MainAppState extends State<MainApp> {
     return FluentApp(
       theme: FluentThemeData(brightness: Brightness.light),
       darkTheme: FluentThemeData(brightness: Brightness.dark),
+
       home: ScaffoldPage(
         content: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0).copyWith(top: 0.0),
           child: Column(
             spacing: vars.sectionSpacing,
             children: [
