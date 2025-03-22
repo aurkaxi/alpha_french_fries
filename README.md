@@ -1,3 +1,5 @@
-# alpha_french_fries
+# Alpha French Fries
 
-A new Flutter project.
+GUI to communicate with arduino for 2 bit A.L.U 
+
+Bluetooth module: HM-10

@@ -1,4 +1,4 @@
-package com.example.alpha_french_fries
+package com.asl.alpha_french_fries
 
 import io.flutter.embedding.android.FlutterActivity
 
