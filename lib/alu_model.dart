@@ -18,22 +18,22 @@ class ALUModel {
     newByte[0] = _byte[0]; // Copy current byte
 
     if (inputA != null) {
-      newByte[0] = (newByte[0] & ~(3 << 2)) | ((inputA & 3) << 2);
+      newByte[0] = (newByte[0] & ~(3 << 6)) | ((inputA & 3) << 6);
     }
     if (inputB != null) {
-      newByte[0] = (newByte[0] & ~3) | (inputB & 3);
+      newByte[0] = (newByte[0] & ~(3 << 4)) | ((inputB & 3) << 4);
     }
     if (operation != null) {
-      newByte[0] = (newByte[0] & ~(15 << 4)) | ((operation & 15) << 4);
+      newByte[0] = (newByte[0] & ~15) | (operation & 15);
     }
 
     return ALUModel._internal(newByte);
   }
 
   /// Getters
-  int get operation => (_byte[0] >> 4) & 15;
-  int get inputA => (_byte[0] >> 2) & 3;
-  int get inputB => _byte[0] & 3;
+  int get inputA => (_byte[0] >> 6) & 3;
+  int get inputB => (_byte[0] >> 4) & 3;
+  int get operation => _byte[0] & 15;
 
   Uint8List get raw => Uint8List.fromList(_byte); // Safe copy
 

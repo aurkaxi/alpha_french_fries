@@ -1,3 +1,4 @@
+import 'package:alpha_french_fries/alu_model.dart';
 import 'package:alpha_french_fries/alu_notifier.dart';
 import 'package:alpha_french_fries/vars.dart' as vars;
 import 'package:fluent_ui/fluent_ui.dart';
@@ -17,21 +18,38 @@ class InstructionWidgetState extends State<InstructionWidget> {
       child: Column(
         spacing: vars.itemSpacing,
         children: [
-          Row(
-            spacing: vars.itemSpacing,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(children: [Card(child: Text('0')), Card(child: Text('0'))]),
-              Row(children: [Card(child: Text('0')), Card(child: Text('0'))]),
-              Row(
+          ValueListenableBuilder<ALUModel>(
+            valueListenable: widget.aluNotifier,
+            builder: (_, alu, _) {
+              final bits = alu.getBits();
+
+              return Row(
+                spacing: vars.itemSpacing,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Card(child: Text('0')),
-                  Card(child: Text('0')),
-                  Card(child: Text('0')),
-                  Card(child: Text('0')),
+                  Row(
+                    children: [
+                      Card(child: Text('${bits[0]}')),
+                      Card(child: Text('${bits[1]}')),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Card(child: Text('${bits[2]}')),
+                      Card(child: Text('${bits[3]}')),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Card(child: Text('${bits[4]}')),
+                      Card(child: Text('${bits[5]}')),
+                      Card(child: Text('${bits[6]}')),
+                      Card(child: Text('${bits[7]}')),
+                    ],
+                  ),
                 ],
-              ),
-            ],
+              );
+            },
           ),
           Text("Instruction"),
         ],
