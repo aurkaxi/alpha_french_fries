@@ -1,9 +1,11 @@
+import 'package:alpha_french_fries/alu_notifier.dart';
 import 'package:alpha_french_fries/operation.dart';
 import 'package:alpha_french_fries/vars.dart' as vars;
 import 'package:fluent_ui/fluent_ui.dart';
 
 class OperationSection extends StatefulWidget {
-  const OperationSection({super.key});
+  final ALUNotifier aluNotifier;
+  const OperationSection({super.key, required this.aluNotifier});
 
   @override
   State<OperationSection> createState() => OperationSectionState();
@@ -12,6 +14,7 @@ class OperationSection extends StatefulWidget {
 class OperationSectionState extends State<OperationSection> {
   Operation _selectedOperation = Operation.addition;
   void setOp(Operation operation) {
+    widget.aluNotifier.setOperation(operation);
     setState(() {
       _selectedOperation = operation;
     });

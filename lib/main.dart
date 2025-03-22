@@ -1,3 +1,5 @@
+import 'package:alpha_french_fries/alu_model.dart';
+import 'package:alpha_french_fries/alu_notifier.dart';
 import 'package:alpha_french_fries/first_number_section.dart';
 import 'package:alpha_french_fries/instruction_widget.dart';
 import 'package:alpha_french_fries/operation_section.dart';
@@ -25,15 +27,13 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  GlobalKey<OperationSectionState> operationKey =
-      GlobalKey<OperationSectionState>();
-  GlobalKey<FirstNumberSectionState> firstNumberKey =
-      GlobalKey<FirstNumberSectionState>();
-  GlobalKey<SecondNumberSectionState> secondNumberKey =
-      GlobalKey<SecondNumberSectionState>();
-  GlobalKey<InstructionWidgetState> instructionKey =
-      GlobalKey<InstructionWidgetState>();
-  GlobalKey<OutputWidgetState> outputKey = GlobalKey<OutputWidgetState>();
+  late final ALUNotifier aluNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    aluNotifier = ALUNotifier(ALUModel());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _MainAppState extends State<MainApp> {
           child: Column(
             spacing: vars.sectionSpacing,
             children: [
-              OperationSection(key: operationKey),
+              OperationSection(aluNotifier: aluNotifier),
               Expanded(
                 child: Row(
                   spacing: vars.sectionSpacing,
@@ -62,15 +62,15 @@ class _MainAppState extends State<MainApp> {
                             spacing: vars.sectionSpacing,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              FirstNumberSection(key: firstNumberKey),
-                              SecondNumberSection(key: secondNumberKey),
+                              FirstNumberSection(aluNotifier: aluNotifier),
+                              SecondNumberSection(aluNotifier: aluNotifier),
                             ],
                           ),
-                          InstructionWidget(key: instructionKey),
+                          InstructionWidget(aluNotifier: aluNotifier),
                         ],
                       ),
                     ),
-                    OutputWidget(key: outputKey),
+                    OutputWidget(aluNotifier: aluNotifier),
                   ],
                 ),
               ),

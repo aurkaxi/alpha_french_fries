@@ -1,8 +1,10 @@
+import 'package:alpha_french_fries/alu_notifier.dart';
 import 'package:alpha_french_fries/vars.dart' as vars;
 import 'package:fluent_ui/fluent_ui.dart';
 
 class InstructionWidget extends StatefulWidget {
-  const InstructionWidget({super.key});
+  final ALUNotifier aluNotifier;
+  const InstructionWidget({super.key, required this.aluNotifier});
 
   @override
   State<InstructionWidget> createState() => InstructionWidgetState();

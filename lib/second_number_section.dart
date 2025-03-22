@@ -1,8 +1,10 @@
+import 'package:alpha_french_fries/alu_notifier.dart';
 import 'package:alpha_french_fries/vars.dart' as vars;
 import 'package:fluent_ui/fluent_ui.dart';
 
 class SecondNumberSection extends StatefulWidget {
-  const SecondNumberSection({super.key});
+  final ALUNotifier aluNotifier;
+  const SecondNumberSection({super.key, required this.aluNotifier});
 
   @override
   State<SecondNumberSection> createState() => SecondNumberSectionState();
@@ -12,6 +14,7 @@ class SecondNumberSectionState extends State<SecondNumberSection> {
   int _secondNumber = 0;
 
   void setSecondNumber(int number) {
+    widget.aluNotifier.setInputB(number);
     setState(() {
       _secondNumber = number;
     });

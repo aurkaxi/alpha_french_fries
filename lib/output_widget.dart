@@ -1,9 +1,11 @@
+import 'package:alpha_french_fries/alu_notifier.dart';
 import 'package:alpha_french_fries/vars.dart' as vars;
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_svg/svg.dart';
 
 class OutputWidget extends StatefulWidget {
-  const OutputWidget({super.key});
+  final ALUNotifier aluNotifier;
+  const OutputWidget({super.key, required this.aluNotifier});
 
   @override
   State<OutputWidget> createState() => OutputWidgetState();
