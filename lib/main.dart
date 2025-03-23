@@ -53,6 +53,12 @@ class _MainAppState extends State<MainApp> {
       darkTheme: FluentThemeData(brightness: Brightness.dark),
 
       home: ScaffoldPage(
+        bottomBar: ValueListenableBuilder(
+          valueListenable: bluetoothService,
+          builder: (_, value, _) {
+            return Text(value.status, textAlign: TextAlign.start);
+          },
+        ),
         content: Padding(
           padding: const EdgeInsets.all(8.0).copyWith(top: 0.0),
           child: Column(
@@ -81,12 +87,6 @@ class _MainAppState extends State<MainApp> {
                           InstructionWidget(
                             aluNotifier: aluNotifier,
                             bluetoothService: bluetoothService,
-                          ),
-                          ValueListenableBuilder(
-                            valueListenable: bluetoothService,
-                            builder: (_, value, _) {
-                              return Text(value.status);
-                            },
                           ),
                         ],
                       ),
