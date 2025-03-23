@@ -18,9 +18,10 @@ class BTService extends ValueNotifier<BTModel> {
         value = value.copyWith(status: "Retrying $tries...");
         await Future.delayed(const Duration(seconds: 2));
       } else {
-        break;
+        return;
       }
     }
+    value = value.copyWith(status: "Failed to connect");
   }
 
   Future<void> _connectToArduino() async {
