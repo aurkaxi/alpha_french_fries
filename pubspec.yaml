@@ -1,7 +1,7 @@
 name: alpha_french_fries
-description: ""
+description: "2 Bit Alu GUI"
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: ^3.7.0

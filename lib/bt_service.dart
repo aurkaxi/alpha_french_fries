@@ -26,7 +26,7 @@ class BTService extends ValueNotifier<BTModel> {
 
   Future<void> _connectToArduino() async {
     final FlutterBlueClassic blueClassic = FlutterBlueClassic(
-      usesFineLocation: false,
+      usesFineLocation: true,
     );
     final List<BluetoothDevice>? listDev = await blueClassic.bondedDevices;
 
