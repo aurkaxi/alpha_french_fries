@@ -23,7 +23,7 @@ dev_dependencies:
 flutter_native_splash:
   background_image: "assets/meta/splash_back.png"
   background_image_dark: "assets/meta/splash_back_dark.png"
-  image: assets/meta/icon_transparent.png
+  image: assets/meta/icon.png
   android_screen_orientation: userLandscape
   fullscreen: true
 
