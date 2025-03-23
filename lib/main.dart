@@ -1,5 +1,7 @@
 import 'package:alpha_french_fries/alu_model.dart';
 import 'package:alpha_french_fries/alu_notifier.dart';
+import 'package:alpha_french_fries/bt_model.dart';
+import 'package:alpha_french_fries/bt_service.dart';
 import 'package:alpha_french_fries/first_number_section.dart';
 import 'package:alpha_french_fries/instruction_widget.dart';
 import 'package:alpha_french_fries/operation_section.dart';
@@ -28,11 +30,20 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   late final ALUNotifier aluNotifier;
+  late final BTService bluetoothService;
 
   @override
   void initState() {
     super.initState();
     aluNotifier = ALUNotifier(ALUModel());
+    bluetoothService = BTService(BTModel());
+  }
+
+  @override
+  void dispose() {
+    bluetoothService.dispose();
+    aluNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -67,11 +78,23 @@ class _MainAppState extends State<MainApp> {
                               SecondNumberSection(aluNotifier: aluNotifier),
                             ],
                           ),
-                          InstructionWidget(aluNotifier: aluNotifier),
+                          InstructionWidget(
+                            aluNotifier: aluNotifier,
+                            bluetoothService: bluetoothService,
+                          ),
+                          ValueListenableBuilder(
+                            valueListenable: bluetoothService,
+                            builder: (_, value, _) {
+                              return Text(value.status);
+                            },
+                          ),
                         ],
                       ),
                     ),
-                    OutputWidget(aluNotifier: aluNotifier),
+                    OutputWidget(
+                      aluNotifier: aluNotifier,
+                      bluetoothService: bluetoothService,
+                    ),
                   ],
                 ),
               ),

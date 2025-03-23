@@ -1,17 +1,25 @@
 import 'package:alpha_french_fries/alu_model.dart';
 import 'package:alpha_french_fries/alu_notifier.dart';
+import 'package:alpha_french_fries/bt_service.dart';
 import 'package:alpha_french_fries/vars.dart' as vars;
 import 'package:fluent_ui/fluent_ui.dart';
 
 class InstructionWidget extends StatefulWidget {
   final ALUNotifier aluNotifier;
-  const InstructionWidget({super.key, required this.aluNotifier});
+  final BTService bluetoothService;
+  const InstructionWidget({
+    super.key,
+    required this.aluNotifier,
+    required this.bluetoothService,
+  });
 
   @override
   State<InstructionWidget> createState() => InstructionWidgetState();
 }
 
 class InstructionWidgetState extends State<InstructionWidget> {
+  bool inited = false;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,6 +29,11 @@ class InstructionWidgetState extends State<InstructionWidget> {
           ValueListenableBuilder<ALUModel>(
             valueListenable: widget.aluNotifier,
             builder: (_, alu, _) {
+              if (!inited) {
+                inited = true;
+                widget.bluetoothService.connect();
+              }
+
               final bits = alu.getBits();
 
               return Row(

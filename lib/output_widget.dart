@@ -1,5 +1,7 @@
 import 'package:alpha_french_fries/alu_model.dart';
 import 'package:alpha_french_fries/alu_notifier.dart';
+import 'package:alpha_french_fries/bt_model.dart';
+import 'package:alpha_french_fries/bt_service.dart';
 import 'package:alpha_french_fries/operation.dart';
 import 'package:alpha_french_fries/vars.dart' as vars;
 import 'package:fluent_ui/fluent_ui.dart';
@@ -7,7 +9,12 @@ import 'package:flutter_svg/svg.dart';
 
 class OutputWidget extends StatefulWidget {
   final ALUNotifier aluNotifier;
-  const OutputWidget({super.key, required this.aluNotifier});
+  final BTService bluetoothService;
+  const OutputWidget({
+    super.key,
+    required this.aluNotifier,
+    required this.bluetoothService,
+  });
 
   @override
   State<OutputWidget> createState() => OutputWidgetState();
@@ -72,10 +79,9 @@ class OutputWidgetState extends State<OutputWidget> {
 
     // Convert result and carry to 2-bit binary representation
     List<int> resultBits = [
-      (result & 1) == 1 ? 1 : 0,
-      (result & 2) == 2 ? 1 : 0,
       (carry & 1) == 1 ? 1 : 0,
-      (carry & 2) == 2 ? 1 : 0,
+      (result & 2) == 2 ? 1 : 0,
+      (result & 1) == 1 ? 1 : 0,
     ];
     return resultBits;
   }
@@ -101,9 +107,9 @@ class OutputWidgetState extends State<OutputWidget> {
                           Operation.values[alu.operation],
                         );
 
-                        final lsb = result[0] == 1 ? ledOn : ledOff;
+                        final carry = result[0] == 1 ? ledOn : ledOff;
                         final msb = result[1] == 1 ? ledOn : ledOff;
-                        final carry = result[2] == 1 ? ledOn : ledOff;
+                        final lsb = result[2] == 1 ? ledOn : ledOff;
 
                         return Row(
                           spacing: vars.itemSpacing,
@@ -127,15 +133,22 @@ class OutputWidgetState extends State<OutputWidget> {
                 spacing: vars.itemSpacing,
                 children: [
                   Expanded(
-                    child: Row(
-                      spacing: vars.itemSpacing,
-                      children: [
-                        Card(child: ledOn),
-                        Divider(direction: Axis.vertical),
-                        Row(
-                          children: [Card(child: ledOff), Card(child: ledOn)],
-                        ),
-                      ],
+                    child: ValueListenableBuilder<BTModel>(
+                      valueListenable: widget.bluetoothService,
+                      builder: (_, value, _) {
+                        final carry = value.byte[0] == 1 ? ledOn : ledOff;
+                        final msb = value.byte[1] == 1 ? ledOn : ledOff;
+                        final lsb = value.byte[2] == 1 ? ledOn : ledOff;
+
+                        return Row(
+                          spacing: vars.itemSpacing,
+                          children: [
+                            Card(child: carry),
+                            Divider(direction: Axis.vertical),
+                            Row(children: [Card(child: msb), Card(child: lsb)]),
+                          ],
+                        );
+                      },
                     ),
                   ),
                   Text("Result"),
