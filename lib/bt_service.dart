@@ -63,7 +63,6 @@ class BTService extends ValueNotifier<BTModel> {
     bool isEnd = String.fromCharCodes(data) == "\r\n";
     if (!isEnd) {
       value = value.copyWith(byte: data);
-      connect();
     }
   }
 
@@ -72,6 +71,7 @@ class BTService extends ValueNotifier<BTModel> {
       sink?.add(data);
     } else {
       value = value.copyWith(status: "Not connected");
+      connect();
     }
   }
 
