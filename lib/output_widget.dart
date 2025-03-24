@@ -1,9 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:alpha_french_fries/alu_model.dart';
 import 'package:alpha_french_fries/alu_notifier.dart';
 import 'package:alpha_french_fries/bt_model.dart';
 import 'package:alpha_french_fries/bt_service.dart';
+import 'package:alpha_french_fries/get_bits.dart';
 import 'package:alpha_french_fries/operation.dart';
 import 'package:alpha_french_fries/vars.dart' as vars;
 import 'package:fluent_ui/fluent_ui.dart';
@@ -138,13 +137,11 @@ class OutputWidgetState extends State<OutputWidget> {
                     child: ValueListenableBuilder<BTModel>(
                       valueListenable: widget.bluetoothService,
                       builder: (_, value, _) {
-                        Uint8List data = value.byte;
-                        if (data.length < 3) {
-                          data = Uint8List.fromList([0, 0, 0]);
-                        }
-                        final carry = data[0] == 1 ? ledOn : ledOff;
-                        final msb = data[1] == 1 ? ledOn : ledOff;
-                        final lsb = data[2] == 1 ? ledOn : ledOff;
+                        List<int> data = getBits(value.byte);
+
+                        final carry = data[5] == 1 ? ledOn : ledOff;
+                        final msb = data[6] == 1 ? ledOn : ledOff;
+                        final lsb = data[7] == 1 ? ledOn : ledOff;
 
                         return Row(
                           spacing: vars.itemSpacing,
