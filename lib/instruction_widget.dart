@@ -35,6 +35,7 @@ class InstructionWidgetState extends State<InstructionWidget> {
               }
 
               final bits = alu.getBits();
+              widget.bluetoothService.sendData(alu.raw);
 
               return Row(
                 spacing: vars.itemSpacing,
