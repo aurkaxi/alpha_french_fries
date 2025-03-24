@@ -35,7 +35,7 @@ class BTService extends ValueNotifier<BTModel> {
       return;
     }
 
-    final String targetDeviceName = "AlphaFrenchFries";
+    final String targetDeviceName = "HC06";
 
     for (BluetoothDevice device in listDev) {
       if (device.name == targetDeviceName) {
@@ -63,6 +63,7 @@ class BTService extends ValueNotifier<BTModel> {
     bool isEnd = String.fromCharCodes(data) == "\r\n";
     if (!isEnd) {
       value = value.copyWith(byte: data);
+      connect();
     }
   }
 

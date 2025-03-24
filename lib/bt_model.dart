@@ -8,7 +8,7 @@ class BTModel {
 
   factory BTModel() {
     final byte = Uint8List(1);
-    final model = BTModel._internal("Not Connected", byte);
+    final model = BTModel._internal("App Started", byte);
     return model;
   }
 

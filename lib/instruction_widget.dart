@@ -19,7 +19,16 @@ class InstructionWidget extends StatefulWidget {
 }
 
 class InstructionWidgetState extends State<InstructionWidget> {
-  bool inited = false;
+  @override
+  void initState() {
+    widget.bluetoothService.connect();
+    widget.aluNotifier.addListener(() {
+      final alu = widget.aluNotifier.value;
+      widget.bluetoothService.sendData(alu.raw);
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +39,7 @@ class InstructionWidgetState extends State<InstructionWidget> {
           ValueListenableBuilder<ALUModel>(
             valueListenable: widget.aluNotifier,
             builder: (_, alu, _) {
-              if (!inited) {
-                inited = true;
-                widget.bluetoothService.connect();
-              }
-
               final bits = getBits(alu.raw);
-              widget.bluetoothService.sendData(alu.raw);
-
               return Row(
                 spacing: vars.itemSpacing,
                 mainAxisAlignment: MainAxisAlignment.center,
