@@ -1,6 +1,7 @@
 import 'package:alpha_french_fries/alu_model.dart';
 import 'package:alpha_french_fries/alu_notifier.dart';
 import 'package:alpha_french_fries/bt_service.dart';
+import 'package:alpha_french_fries/get_bits.dart';
 import 'package:alpha_french_fries/vars.dart' as vars;
 import 'package:fluent_ui/fluent_ui.dart';
 
@@ -34,7 +35,7 @@ class InstructionWidgetState extends State<InstructionWidget> {
                 widget.bluetoothService.connect();
               }
 
-              final bits = alu.getBits();
+              final bits = getBits(alu.raw);
               widget.bluetoothService.sendData(alu.raw);
 
               return Row(

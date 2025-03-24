@@ -41,8 +41,4 @@ class ALUModel {
   String toString() {
     return 'ALUModel(op: $operation, A: $inputA, B: $inputB, byte: 0x${_byte[0].toRadixString(16).padLeft(2, '0').toUpperCase()})';
   }
-
-  List<int> getBits() {
-    return List.generate(8, (index) => (_byte[0] >> (7 - index)) & 1);
-  }
 }
