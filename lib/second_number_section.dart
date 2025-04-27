@@ -13,12 +13,8 @@ class SecondNumberSection extends StatefulWidget {
 
 class SecondNumberSectionState extends State<SecondNumberSection> {
   int _secondNumber = 0;
-  bool isIncrementOrDecrement = false;
 
   void setSecondNumber(int number) {
-    if (isIncrementOrDecrement) {
-      return;
-    }
     widget.aluNotifier.setInputB(number);
     setState(() {
       _secondNumber = number;
@@ -28,49 +24,56 @@ class SecondNumberSectionState extends State<SecondNumberSection> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Column(
-        spacing: vars.itemSpacing,
-        children: [
-          ValueListenableBuilder(
-            valueListenable: widget.aluNotifier,
-            builder: (_, alu, _) {
-              final bits = alu.operation;
-              isIncrementOrDecrement =
-                  bits == Operation.increment || bits == Operation.decrement;
+      child: ValueListenableBuilder(
+        valueListenable: widget.aluNotifier,
+        builder: (_, alu, _) {
+          final bits = alu.operation;
+          bool isUnControllable =
+              bits == Operation.increment ||
+              bits == Operation.decrement ||
+              bits == Operation.rightShift ||
+              bits == Operation.leftShift ||
+              bits == Operation.negation;
 
-              if (isIncrementOrDecrement) {
-                _secondNumber = 1;
-              }
+          if (bits == Operation.increment || bits == Operation.decrement) {
+            _secondNumber = 1;
+          }
 
-              return Row(
-                spacing: vars.itemSpacing,
-                children: [
-                  ToggleButton(
-                    checked: _secondNumber == 0,
-                    child: Text("0"),
-                    onChanged: (state) => state ? setSecondNumber(0) : null,
-                  ),
-                  ToggleButton(
-                    checked: _secondNumber == 1,
-                    child: Text("1"),
-                    onChanged: (state) => state ? setSecondNumber(1) : null,
-                  ),
-                  ToggleButton(
-                    checked: _secondNumber == 2,
-                    child: Text("2"),
-                    onChanged: (state) => state ? setSecondNumber(2) : null,
-                  ),
-                  ToggleButton(
-                    checked: _secondNumber == 3,
-                    child: Text("3"),
-                    onChanged: (state) => state ? setSecondNumber(3) : null,
-                  ),
-                ],
-              );
-            },
-          ),
-          Text("Second Number"),
-        ],
+          return Visibility(
+            visible: !isUnControllable,
+            child: Column(
+              spacing: vars.itemSpacing,
+              children: [
+                Row(
+                  spacing: vars.itemSpacing,
+                  children: [
+                    ToggleButton(
+                      checked: _secondNumber == 0,
+                      child: Text("0"),
+                      onChanged: (state) => state ? setSecondNumber(0) : null,
+                    ),
+                    ToggleButton(
+                      checked: _secondNumber == 1,
+                      child: Text("1"),
+                      onChanged: (state) => state ? setSecondNumber(1) : null,
+                    ),
+                    ToggleButton(
+                      checked: _secondNumber == 2,
+                      child: Text("2"),
+                      onChanged: (state) => state ? setSecondNumber(2) : null,
+                    ),
+                    ToggleButton(
+                      checked: _secondNumber == 3,
+                      child: Text("3"),
+                      onChanged: (state) => state ? setSecondNumber(3) : null,
+                    ),
+                  ],
+                ),
+                Text("Second Number"),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
