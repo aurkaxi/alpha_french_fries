@@ -15,6 +15,9 @@ class OperationSectionState extends State<OperationSection> {
   Operation _selectedOperation = Operation.addition;
   void setOp(Operation operation) {
     widget.aluNotifier.setOperation(operation);
+    if (operation == Operation.increment || operation == Operation.decrement) {
+      widget.aluNotifier.setInputB(1);
+    }
     setState(() {
       _selectedOperation = operation;
     });

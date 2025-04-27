@@ -105,7 +105,7 @@ class OutputWidgetState extends State<OutputWidget> {
                         final result = calculateResult(
                           alu.inputA,
                           alu.inputB,
-                          Operation.values[alu.operation],
+                          alu.operation,
                         );
 
                         final carry = result[0] == 1 ? ledOn : ledOff;
