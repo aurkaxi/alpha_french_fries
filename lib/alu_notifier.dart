@@ -15,6 +15,6 @@ class ALUNotifier extends ValueNotifier<ALUModel> {
   }
 
   void setOperation(Operation op) {
-    value = value.copyWith(operation: op.index);
+    value = value.copyWith(operation: op);
   }
 }
