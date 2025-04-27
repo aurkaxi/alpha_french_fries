@@ -57,8 +57,14 @@ class OutputWidgetState extends State<OutputWidget> {
         carry = (a >> 1) & 3;
         break;
       case Operation.subtraction:
-        result = (a - b) & 3;
-        carry = (a - b) >> 2;
+        int raw = a - b;
+        if (raw < 0) {
+          carry = 1;
+          result = (-raw) & 3; // store positive magnitude
+        } else {
+          carry = 0;
+          result = raw & 3;
+        }
         break;
       case Operation.rightShift:
         result = (a >> 1) & 3;
@@ -69,8 +75,14 @@ class OutputWidgetState extends State<OutputWidget> {
         carry = (a + 1) >> 2;
         break;
       case Operation.decrement:
-        result = (a - 1) & 3;
-        carry = (a - 1) >> 2;
+        int raw = a - 1;
+        if (raw < 0) {
+          carry = 1;
+          result = (-raw) & 3; // store positive magnitude
+        } else {
+          carry = 0;
+          result = raw & 3;
+        }
         break;
       case Operation.xor:
         result = (a ^ b) & 3;
@@ -80,7 +92,8 @@ class OutputWidgetState extends State<OutputWidget> {
 
     // Convert result and carry to 2-bit binary representation
     List<int> resultBits = [
-      (carry & 1) == 1 ? 1 : 0,
+      // (carry & 1) == 1 ? 1 : 0,
+      carry,
       (result & 2) == 2 ? 1 : 0,
       (result & 1) == 1 ? 1 : 0,
     ];
